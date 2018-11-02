@@ -15,12 +15,18 @@ public class GrowableList<T> implements P6List<T> {
 
 	@Override
 	public T removeFront() {
-		throw new P6NotImplemented();
+		return removeIndex(0);
 	}
 
 	@Override
 	public T removeBack() {
-		throw new P6NotImplemented();
+		if (this.size() == 0) {
+			throw new EmptyListError();
+		}
+		fill--;
+		T value = this.getIndex(fill);
+		this.array[fill] = null;
+		return value;
 	}
 
 	@Override
@@ -44,9 +50,12 @@ public class GrowableList<T> implements P6List<T> {
 
 	@Override
 	public void addBack(T item) {
-		// I've implemented part of this for you.
 		if (fill >= this.array.length) { 
-			throw new P6NotImplemented();
+			int newSize=fill*2;
+			Object[] newArray = new Object[newSize];
+			for (int i=0; i<array.length; i++) {
+				newArray[i] = array[i];
+				}
 		}
 		this.array[fill++] = item;
 	}

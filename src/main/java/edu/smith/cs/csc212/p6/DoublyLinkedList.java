@@ -1,5 +1,7 @@
 package edu.smith.cs.csc212.p6;
 
+
+
 import edu.smith.cs.csc212.p6.errors.EmptyListError;
 import edu.smith.cs.csc212.p6.errors.P6NotImplemented;
 
@@ -21,60 +23,136 @@ public class DoublyLinkedList<T> implements P6List<T> {
 	@Override
 	public T removeFront() {
 		checkNotEmpty();
-		throw new P6NotImplemented();
+		T before = start.value;
+		start = start.after;
+		return before;
 	}
 
 	@Override
 	public T removeBack() {
 		checkNotEmpty();
-		throw new P6NotImplemented();
+		if (size()==1) {
+			T casper=start.value;
+			start=null;
+			return casper;
+		}
+		else {
+			for (Node<T> current = start; current != null; current = current.after) {
+				if (current.after.after==null) {
+					T groot=current.after.value;
+					current.after=null;
+					return groot;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
 	public T removeIndex(int index) {
 		checkNotEmpty();
-		throw new P6NotImplemented();
+		T removed = getIndex(index);
+		if (size()==1) {
+			T lonely=start.value;
+			start=null;
+			return lonely;
+		}else {
+			int gl=0;
+			for (Node<T> current = start; index==gl-1; current = current.after) {
+				gl++;
+				if(index==gl-1) {
+					current.after=null;
+					current.after=current.after.after;
+					return removed;
+				}
+			}
+		}
+		return removed;
 	}
 
 	@Override
 	public void addFront(T item) {
-		throw new P6NotImplemented();
+		Node<T> first = new Node<T>(item);
+		Node<T> second = start;
+		if (second==null) {
+			end=first;
+		}else {
+		first.after = second;
+		first.before = null;
+		second.before = first;
+		start = first;
+		}
 	}
 
 	@Override
 	public void addBack(T item) {
-		throw new P6NotImplemented();
+		Node<T> last = new Node<T>(item);
+		Node<T> secondLast = end;
+		if(size()==0) {
+			addFront(item);
+		}else {
+			last.before=secondLast;
+			last.after=null;
+			secondLast.after=last;
+			end=last;
+		}
 	}
 
 	@Override
 	public void addIndex(T item, int index) {
-		throw new P6NotImplemented();
+		if(index==0){
+			addFront(item);
+		}else {
+			int gi=0;
+			for (Node<T> current = start; current != null; current = current.after) {
+				if (gi==index-1) {
+					Node<T> boo = new Node<T>(item);
+					current.after=boo;
+				}
+				 gi++;
+			}
+		}	
 	}
 
 	@Override
 	public T getFront() {
-		throw new P6NotImplemented();
+		return start.value;
 	}
 
 	@Override
 	public T getBack() {
-		throw new P6NotImplemented();
+		return end.value;
 	}
 	
 	@Override
 	public T getIndex(int index) {
 		checkNotEmpty();
-		throw new P6NotImplemented();
+		int at = 0;
+		for (Node<T> current = start; current != null; current = current.after) {
+			if (at == index) {
+				return current.value;
+			}
+			at++;
+	}
+		throw new IndexOutOfBoundsException();
 	}
 
 	@Override
 	public int size() {
-		throw new P6NotImplemented();
+		int count = 0;
+		for (Node<T> n = this.start; n != null; n = n.after) {
+			count++;
+		}
+		return count;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		throw new P6NotImplemented();
+		if (this.size() ==0)
+			return true;
+		else {
+		return false;
+	}
 	}
 	
 	private void checkNotEmpty() {

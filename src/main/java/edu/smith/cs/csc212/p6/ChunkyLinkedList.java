@@ -18,22 +18,27 @@ public class ChunkyLinkedList<T> implements P6List<T> {
 
 	public ChunkyLinkedList(int chunkSize) {
 		this.chunkSize = chunkSize;
+		// We use chunks before creating it:
+		chunks = new SinglyLinkedList<>();
 		chunks.addBack(new FixedSizeList<>(chunkSize));
 	}
 
 	@Override
 	public T removeFront() {
-		throw new P6NotImplemented();
+		checkNotEmpty();
+		return getIndex(0);
 	}
 
 	@Override
 	public T removeBack() {
-		throw new P6NotImplemented();
+		checkNotEmpty();
+		return getIndex(size()-1);
 	}
 
 	@Override
 	public T removeIndex(int index) {
-		throw new P6NotImplemented();
+		checkNotEmpty();
+		return getIndex(index);
 	}
 
 	@Override
@@ -95,5 +100,10 @@ public class ChunkyLinkedList<T> implements P6List<T> {
 	@Override
 	public boolean isEmpty() {
 		return this.chunks.isEmpty();
+	}
+	private void checkNotEmpty() {
+		if (this.isEmpty()) {
+			throw new EmptyListError();
+		}
 	}
 }
