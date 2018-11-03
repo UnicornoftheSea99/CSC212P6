@@ -3,6 +3,7 @@ package edu.smith.cs.csc212.p6;
 import edu.smith.cs.csc212.p6.errors.BadIndexError;
 import edu.smith.cs.csc212.p6.errors.EmptyListError;
 import edu.smith.cs.csc212.p6.errors.P6NotImplemented;
+import edu.smith.cs.csc212.p6.errors.RanOutOfSpaceError;
 
 /**
  * This is a data structure that has an array inside each node of a Linked List.
@@ -43,17 +44,17 @@ public class ChunkyLinkedList<T> implements P6List<T> {
 
 	@Override
 	public void addFront(T item) {
-		throw new P6NotImplemented();
+		addIndex(item, 0);	
 	}
 
 	@Override
 	public void addBack(T item) {
-		throw new P6NotImplemented();
+		
 	}
 
 	@Override
 	public void addIndex(T item, int index) {
-		throw new P6NotImplemented();
+			
 	}
 	
 	@Override

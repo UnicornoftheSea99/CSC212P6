@@ -50,14 +50,16 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 			return lonely;
 		}else {
 			int gl=0;
-			for (Node<T> current = start; index==gl-1; current = current.next) {
-				gl++;
-				if(index==gl-1) {
+			Node<T>current=start;
+			for (gl=index-1; gl>0; gl--) {
+				if(current.next!=null) {
+					current=current.next;
+				}
+				else {
 					current.next=null;
-					current.next=current.next.next;
-					return removed;
 				}
 			}
+			current.next=current.next.next;
 		}
 		return removed;
 	}

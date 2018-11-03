@@ -2,6 +2,7 @@ package edu.smith.cs.csc212.p6;
 
 
 
+
 import edu.smith.cs.csc212.p6.errors.EmptyListError;
 import edu.smith.cs.csc212.p6.errors.P6NotImplemented;
 
@@ -58,14 +59,16 @@ public class DoublyLinkedList<T> implements P6List<T> {
 			return lonely;
 		}else {
 			int gl=0;
-			for (Node<T> current = start; index==gl-1; current = current.after) {
-				gl++;
-				if(index==gl-1) {
+			Node<T>current=start;
+			for (gl=index-1; gl>0; gl--) {
+				if(current.after!=null) {
+					current=current.after;
+				}
+				else {
 					current.after=null;
-					current.after=current.after.after;
-					return removed;
 				}
 			}
+			current.after=current.after.after;
 		}
 		return removed;
 	}
@@ -75,11 +78,11 @@ public class DoublyLinkedList<T> implements P6List<T> {
 		Node<T> first = new Node<T>(item);
 		Node<T> second = start;
 		if (second==null) {
-			end=first;
+			start=first;
 		}else {
+		second.before = first;
 		first.after = second;
 		first.before = null;
-		second.before = first;
 		start = first;
 		}
 	}
@@ -91,9 +94,9 @@ public class DoublyLinkedList<T> implements P6List<T> {
 		if(size()==0) {
 			addFront(item);
 		}else {
-			last.before=secondLast;
-			last.after=null;
 			secondLast.after=last;
+			last.before=secondLast;
+			//last.after=null;
 			end=last;
 		}
 	}
